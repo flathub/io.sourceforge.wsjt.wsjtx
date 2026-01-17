@@ -1,0 +1,87 @@
+app-id: io.sourceforge.wsjt.wsjtx
+runtime: org.kde.Platform
+runtime-version: 5.15-25.08
+sdk: org.kde.Sdk
+command: wsjtx.sh
+rename-desktop-file: wsjtx.desktop
+rename-icon: wsjtx_icon
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=all
+  - --socket=pulseaudio
+  - --share=network
+cleanup:
+  - /man
+  - /include
+  - /share/man
+  - /share/doc
+  - /doc
+  - '*.a'
+  - '*.la'
+modules:
+  - shared-modules/linux-audio/fftw3f.json
+
+  - name: portaudio
+    sources:
+      - type: archive
+        url: http://files.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+        sha256: f5a21d7dcd6ee84397446fa1fa1a0675bb2e8a4a6dceb4305a8404698d8d1513
+        x-checker-data:
+          type: anitya
+          project-id: 10597
+          url-template: http://files.portaudio.com/archives/pa_stable_v$version.tgz
+
+  - name: boost
+    sources:
+      - type: archive
+        url: https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.bz2
+        sha256: 49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305
+        x-checker-data:
+          type: anitya
+          project-id: 6845
+          stable-only: true
+          url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=$FLATPAK_DEST --with-libraries=container,date_time,filesystem,log
+      - ./b2 -j $FLATPAK_BUILDER_N_JOBS install
+
+  - name: hamlib
+    sources:
+      - type: archive
+        url: https://github.com/Hamlib/Hamlib/releases/download/4.6.5/hamlib-4.6.5.tar.gz
+        sha256: 90d6f1dba59417c00f8f4545131c7efd31930cd0e178598980a8210425e3852e
+        x-checker-data:
+          type: anitya
+          project-id: 1292
+          url-template: https://github.com/Hamlib/Hamlib/releases/download/$version/hamlib-$version.tar.gz
+
+  - name: wsjtx
+    sources:
+      - type: git
+        url: https://git.code.sf.net/p/wsjt/wsjtx
+        tag: wsjtx-2.7.0
+        commit: b4f9a431bcf6449df8f37b56de79d48b665b044c
+        x-checker-data:
+          type: git
+          tag-pattern: ^wsjtx-([\d.]+)$
+      - type: script
+        dest-filename: wsjtx.sh
+        commands:
+          - wsjtx $@ --style=fusion
+      - type: patch
+        path: wsjtx-use-standard-icon-path.patch
+      - type: file
+        path: io.sourceforge.wsjt.wsjtx.metainfo.xml
+    buildsystem: cmake
+    config-opts:
+      - -DWSJT_SKIP_MANPAGES=ON
+      - -DWSJT_GENERATE_DOCS=OFF
+    post-install:
+      - install -D wsjtx.sh /app/bin/wsjtx.sh
+      - install -D io.sourceforge.wsjt.wsjtx.metainfo.xml /app/share/metainfo/io.sourceforge.wsjt.wsjtx.metainfo.xml
+      - sed -i 's:Exec=wsjtx:Exec=wsjtx.sh:' /app/share/applications/wsjtx.desktop
+      - sed -i 's:Icon=wsjtx_icon:Icon=io.sourceforge.wsjt.wsjtx:' /app/share/applications/message_aggregator.desktop
+      - mv /app/share/applications/message_aggregator.desktop /app/share/applications/io.sourceforge.wsjt.wsjtx.MessageAggregator.desktop
