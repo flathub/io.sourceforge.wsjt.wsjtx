@@ -82,6 +82,6 @@ modules:
     post-install:
       - install -D wsjtx.sh /app/bin/wsjtx.sh
       - install -D io.sourceforge.wsjt.wsjtx.metainfo.xml /app/share/metainfo/io.sourceforge.wsjt.wsjtx.metainfo.xml
-      - sed -i 's:Exec=wsjtx:Exec=wsjtx.sh:' /app/share/applications/wsjtx.desktop
-      - sed -i 's:Icon=wsjtx_icon:Icon=io.sourceforge.wsjt.wsjtx:' /app/share/applications/message_aggregator.desktop
+      - desktop-file-edit --set-key=Exec --set-value=wsjtx.sh /app/share/applications/wsjtx.desktop
+      - desktop-file-edit --set-key=Icon --set-value=io.sourceforge.wsjt.wsjtx /app/share/applications/message_aggregator.desktop
       - mv /app/share/applications/message_aggregator.desktop /app/share/applications/io.sourceforge.wsjt.wsjtx.MessageAggregator.desktop
