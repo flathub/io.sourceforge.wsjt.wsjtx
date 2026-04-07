@@ -17,13 +17,14 @@
     </description>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <url type="bugtracker">https://sourceforge.net/projects/wsjt/lists/wsjt-devel</url>
-    <url type="homepage">https://wsjt.sourceforge.io/wsjtx.html</url>
+    <url type="homepage">https://wsjtx.github.io/wsjtx/</url>
+    <url type="contact">https://wsjtx.groups.io/g/main/messages</url>
+    <url type="vcs-browser">https://github.com/WSJTX/wsjtx</url>
     <screenshots>
         <screenshot type="default">
             <caption>Main WSJT-X window</caption>
             <image>
-                https://sourceforge.net/p/wsjt/wsjtx/ci/master/tree/doc/user_guide/en/images/main-ui.png?format=raw
+                https://raw.githubusercontent.com/WSJTX/wsjtx/refs/heads/master/doc/user_guide/en/images/main-ui.png
             </image>
         </screenshot>
     </screenshots>
