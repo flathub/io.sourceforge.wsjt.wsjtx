@@ -61,12 +61,12 @@ modules:
   - name: wsjtx
     sources:
       - type: git
-        url: https://git.code.sf.net/p/wsjt/wsjtx
-        tag: wsjtx-2.7.0
-        commit: b4f9a431bcf6449df8f37b56de79d48b665b044c
+        url: https://github.com/WSJTX/wsjtx.git
+        tag: v3.0.0
+        commit: ab976b1b4b72a96aaa3259591f68ad772af7d7f9
         x-checker-data:
           type: git
-          tag-pattern: ^wsjtx-([\d.]+)$
+          tag-pattern: ^v([\d.]+)$
       - type: script
         dest-filename: wsjtx.sh
         commands:
