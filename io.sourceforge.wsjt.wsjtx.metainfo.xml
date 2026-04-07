@@ -6,7 +6,9 @@
         <id>wsjtx.desktop</id>
     </provides>
     <summary>Amateur Radio Weak Signal Operating</summary>
-    <developer_name>Joe Taylor and others</developer_name>
+    <developer id="io.github.wsjtx">
+        <name>Joe Taylor and others</name>
+    </developer>
     <description>
         <p>
             WSJT-X implements amateur radio communication protocols or "modes" called FT4, FT8, JT4,
@@ -17,8 +19,9 @@
     </description>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <url type="bugtracker">https://sourceforge.net/projects/wsjt/lists/wsjt-devel</url>
-    <url type="homepage">https://wsjt.sourceforge.io/wsjtx.html</url>
+    <url type="homepage">https://wsjtx.github.io/wsjtx/index.html</url>
+    <url type="bugtracker">https://github.com/WSJTX/wsjtx/issues</url>
+    <url type="vcs-browser">https://github.com/WSJTX/wsjtx</url>
     <screenshots>
         <screenshot type="default">
             <caption>Main WSJT-X window</caption>
@@ -28,9 +31,7 @@
         </screenshot>
     </screenshots>
     <releases>
-        <release version="3.0.0" date="2026-04-06">
-            <description></description>
-        </release>
+        <release version="3.0.0" date="2026-04-06"->
     </releases>
     <content_rating type="oars-1.1"/>
     <update_contact>xylo04@gmail.com</update_contact>
