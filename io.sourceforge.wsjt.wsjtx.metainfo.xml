@@ -22,11 +22,12 @@
     <url type="homepage">https://wsjtx.github.io/wsjtx/index.html</url>
     <url type="bugtracker">https://github.com/WSJTX/wsjtx/issues</url>
     <url type="vcs-browser">https://github.com/WSJTX/wsjtx</url>
+    <url type="contact">https://wsjtx.groups.io/g/main/messages</url>
     <screenshots>
         <screenshot type="default">
             <caption>Main WSJT-X window</caption>
             <image>
-                https://sourceforge.net/p/wsjt/wsjtx/ci/master/tree/doc/user_guide/en/images/main-ui.png?format=raw
+                https://raw.githubusercontent.com/WSJTX/wsjtx/refs/heads/master/doc/user_guide/en/images/main-ui.png
             </image>
         </screenshot>
     </screenshots>
