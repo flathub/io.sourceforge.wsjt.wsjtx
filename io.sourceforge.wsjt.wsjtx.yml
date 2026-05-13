@@ -13,11 +13,12 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
 cleanup:
-  - /man
   - /include
-  - /share/man
+  - /lib/cmake
+  - /lib/pkgconfig
+  - /share/aclocal
   - /share/doc
-  - /doc
+  - /share/man
   - '*.a'
   - '*.la'
 modules:
