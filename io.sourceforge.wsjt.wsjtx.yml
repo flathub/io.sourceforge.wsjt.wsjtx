@@ -35,6 +35,10 @@ modules:
           url-template: http://files.portaudio.com/archives/pa_stable_v$version.tgz
 
   - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=$FLATPAK_DEST --with-libraries=container,date_time,filesystem,log
+      - ./b2 -j $FLATPAK_BUILDER_N_JOBS install
     sources:
       - type: archive
         url: https://archives.boost.io/release/1.92.0/source/boost_1_92_0.tar.bz2
@@ -44,10 +48,6 @@ modules:
           project-id: 6845
           stable-only: true
           url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
-    buildsystem: simple
-    build-commands:
-      - ./bootstrap.sh --prefix=$FLATPAK_DEST --with-libraries=container,date_time,filesystem,log
-      - ./b2 -j $FLATPAK_BUILDER_N_JOBS install
 
   - name: hamlib
     sources:
@@ -60,6 +60,16 @@ modules:
           url-template: https://github.com/Hamlib/Hamlib/releases/download/$version/hamlib-$version.tar.gz
 
   - name: wsjtx
+    buildsystem: cmake
+    config-opts:
+      - -DWSJT_SKIP_MANPAGES=ON
+      - -DWSJT_GENERATE_DOCS=OFF
+    post-install:
+      - install -Dm755 wsjtx.sh -t /app/bin/
+      - install -Dm644 io.sourceforge.wsjt.wsjtx.metainfo.xml -t /app/share/metainfo/
+      - desktop-file-edit --set-key=Exec --set-value=wsjtx.sh /app/share/applications/wsjtx.desktop
+      - desktop-file-edit --set-icon=$FLATPAK_ID /app/share/applications/message_aggregator.desktop
+      - mv /app/share/applications/message_aggregator.desktop /app/share/applications/$FLATPAK_ID.MessageAggregator.desktop
     sources:
       - type: git
         url: https://github.com/WSJTX/wsjtx.git
@@ -76,13 +86,4 @@ modules:
         path: wsjtx-use-standard-icon-path.patch
       - type: file
         path: io.sourceforge.wsjt.wsjtx.metainfo.xml
-    buildsystem: cmake
-    config-opts:
-      - -DWSJT_SKIP_MANPAGES=ON
-      - -DWSJT_GENERATE_DOCS=OFF
-    post-install:
-      - install -D wsjtx.sh /app/bin/wsjtx.sh
-      - install -D io.sourceforge.wsjt.wsjtx.metainfo.xml /app/share/metainfo/io.sourceforge.wsjt.wsjtx.metainfo.xml
-      - desktop-file-edit --set-key=Exec --set-value=wsjtx.sh /app/share/applications/wsjtx.desktop
-      - desktop-file-edit --set-key=Icon --set-value=io.sourceforge.wsjt.wsjtx /app/share/applications/message_aggregator.desktop
-      - mv /app/share/applications/message_aggregator.desktop /app/share/applications/io.sourceforge.wsjt.wsjtx.MessageAggregator.desktop
+
